@@ -59,7 +59,7 @@ public unsafe static class Wave16IO
     return new(data, dataSize, sampleRate);
   }
 
-  public static void Save(Wave16 wave16, string destFilePath, bool overwrite = false)
+  public static void Save(Wave16 wave, string destFilePath, bool overwrite = false)
   {
     FileStream destStream;
 
@@ -86,21 +86,21 @@ public unsafe static class Wave16IO
 #pragma warning disable IDE0004
 
     writer.Write(Bytes_RIFF);
-    writer.Write((int)wave16.TotalChunkSize);
+    writer.Write((int)wave.TotalChunkSize);
     writer.Write(Bytes_WAVE);
     writer.Write(Bytes_fmt);
     writer.Write((int)Wave16.SubChunk1Size);
     writer.Write((short)Wave16.AudioFormat);
     writer.Write((short)Wave16.ChannelCount);
-    writer.Write((int)wave16.SampleRate);
-    writer.Write((int)wave16.ByteRate);
+    writer.Write((int)wave.SampleRate);
+    writer.Write((int)wave.ByteRate);
     writer.Write((short)Wave16.BlockAlign);
     writer.Write((short)Wave16.BitsPerSample);
     writer.Write(Bytes_data);
-    writer.Write((int)wave16.DataSize);
+    writer.Write((int)wave.DataSize);
 
 #pragma warning restore IDE0004
 
-    writer.Write(new Span<byte>(wave16.Data.ToPointer(), wave16.DataSize));
+    writer.Write(new Span<byte>(wave.Data.ToPointer(), wave.DataSize));
   }
 }

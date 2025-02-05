@@ -2,7 +2,7 @@
 
 namespace Wave16Bit;
 
-public class Wave16(nint data, int dataSize, int sampleRate) :  IDisposable
+public sealed class Wave16(nint data, int dataSize, int sampleRate) : IDisposable
 {
   public const short BitsPerSample = 16;
   public const int SubChunk1Size = 16;
@@ -14,7 +14,7 @@ public class Wave16(nint data, int dataSize, int sampleRate) :  IDisposable
 
   public nint Data { get; private set; } = data;
 
-  public int DataSize { get; } = dataSize;
+  public int DataSize { get; private set; } = dataSize;
 
   public int SampleRate { get; set; } = sampleRate;
 
@@ -24,7 +24,13 @@ public class Wave16(nint data, int dataSize, int sampleRate) :  IDisposable
 
   public void Resize(int value)
   {
+    if (value == DataSize)
+    {
+      return;
+    }
 
+    Data = Marshal.ReAllocCoTaskMem(Data, value);
+    DataSize = value;
   }
 
   public void Dispose()
@@ -51,5 +57,5 @@ public class Wave16(nint data, int dataSize, int sampleRate) :  IDisposable
   ~Wave16()
   {
     Dispose(disposing: false);
-  }  
+  }
 }
