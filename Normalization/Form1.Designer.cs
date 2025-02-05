@@ -1,5 +1,5 @@
 ﻿
-namespace SampleCutter
+namespace Normalization
 {
     partial class Form1
     {

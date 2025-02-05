@@ -1,19 +1,7 @@
-﻿using SampleCutter;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.Metrics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 using Wave16Bit;
-using static System.Formats.Asn1.AsnWriter;
 
-namespace SampleCutter;
+namespace Normalization;
 
 public partial class Form1 : Form
 {

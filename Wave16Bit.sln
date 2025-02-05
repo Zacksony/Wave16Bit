@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleCutter", "SampleCutter\SampleCutter.csproj", "{10076D09-BEC5-4738-A6DD-F1A35F2DCF79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Normalization", "Normalization\Normalization.csproj", "{97637D15-B121-498C-9CFB-AF37F77771FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{10076D09-BEC5-4738-A6DD-F1A35F2DCF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10076D09-BEC5-4738-A6DD-F1A35F2DCF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10076D09-BEC5-4738-A6DD-F1A35F2DCF79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97637D15-B121-498C-9CFB-AF37F77771FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97637D15-B121-498C-9CFB-AF37F77771FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97637D15-B121-498C-9CFB-AF37F77771FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97637D15-B121-498C-9CFB-AF37F77771FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
