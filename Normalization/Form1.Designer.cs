@@ -59,9 +59,9 @@ namespace Normalization
       label2.Location = new Point(14, 32);
       label2.Margin = new Padding(4, 0, 4, 0);
       label2.Name = "label2";
-      label2.Size = new Size(123, 17);
+      label2.Size = new Size(99, 17);
       label2.TabIndex = 2;
-      label2.Text = "切割阈值 (0 - 32767)";
+      label2.Text = "限幅 (0 - 32767)";
       // 
       // textBox_cutValue
       // 
@@ -148,7 +148,7 @@ namespace Normalization
       MaximizeBox = false;
       MinimizeBox = false;
       Name = "Form1";
-      Text = "采样切尾器 2.0";
+      Text = "采样标准化 1.0";
       FormClosing += Form1_FormClosing;
       ResumeLayout(false);
       PerformLayout();

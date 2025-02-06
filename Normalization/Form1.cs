@@ -5,17 +5,17 @@ namespace Normalization;
 
 public partial class Form1 : Form
 {
-  private readonly int DefaultCutValue = 16;
+  private readonly int DefaultMaxSample = 32000;
 
   public Form1()
   {
     InitializeComponent();
-    this.textBox_cutValue.Text = DefaultCutValue.ToString();
+    this.textBox_cutValue.Text = DefaultMaxSample.ToString();
     this.button_clearFiles.Enabled = false;
     this.button_execute.Enabled = false;
   }
 
-  public int CutValue { get; set; } = 16;
+  public int MaxSample { get; set; } = 32000;
 
   public List<string> FilePaths { get; set; } = [];
 
@@ -33,7 +33,7 @@ public partial class Form1 : Form
     {
       try
       {
-        Cut(path);
+        Normalize(path);
 
         ++counter;
         OnExecuting(counter);
@@ -70,35 +70,42 @@ public partial class Form1 : Form
     OnExecutionEnded();
   }
 
-  private unsafe void Cut(string path)
+  private unsafe void Normalize(string path)
   {
     using Wave16 wave = Wave16IO.Load(path);
-    int slientStartIndex = GetSlientStartIndex((byte*)wave.Data, wave.DataSize);
-    wave.Resize(slientStartIndex);
+    double amplMuptip = GetAmplMultip((byte*)wave.Data, wave.DataSize);
+    AmplSamples((byte*)wave.Data, wave.DataSize, amplMuptip);
     Wave16IO.Save(wave, path, overwrite: true);
   }
 
-  private unsafe int GetSlientStartIndex(byte* data, int dataSize)
+  private unsafe void AmplSamples(byte* data, int dataSize, double amplMultip)
   {
-    if (dataSize <= 1)
+    short* samples = (short*)(data);
+    short* sampleEnd = (short*)(data + dataSize);
+    while (samples < sampleEnd)
     {
-      return 0;
+      *samples = (short)Math.Min(MaxSample, (int)Math.Round(*samples * amplMultip));
+      samples++;
     }
+  }
 
-    int* samples = (int*)(data + dataSize) - 1;
-    while (samples >= data)
+  private unsafe double GetAmplMultip(byte* data, int dataSize)
+  {
+    short result = 0;
+    short* samples = (short*)(data);
+    short* sampleEnd = (short*)(data + dataSize);
+    while (samples < sampleEnd)
     {
-      short* channels = (short*)samples;
+      short absSample = Math.Abs(*samples);
 
-      if (channels[0] >= CutValue || channels[1] >= CutValue)
+      if (result < absSample)
       {
-        return (int)((byte*)(samples + 1) - data);
+        result = absSample;
       }
 
-      samples--;
+      samples++;
     }
-
-    return 0;
+    return (double)MaxSample / result;
   }
 
   private void OnExecutionStarting()
@@ -141,7 +148,7 @@ public partial class Form1 : Form
   {
     if (!int.TryParse(this.textBox_cutValue.Text, out int value))
     {
-      value = DefaultCutValue;
+      value = DefaultMaxSample;
     }
     else if (value < 0)
     {
@@ -157,7 +164,7 @@ public partial class Form1 : Form
       
     }
 
-    CutValue = value;
+    MaxSample = value;
     this.textBox_cutValue.Text = value.ToString();
   }
 
